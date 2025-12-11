@@ -1,6 +1,6 @@
 # Import python packages
 import streamlit as st
-import snowflake-snowpark-python
+import snowflake.snowpark.python
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
