@@ -15,6 +15,9 @@ st.write(
 name_on_smoothie = st.text_input("Name on the Smoothie ")
 
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+
+sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+
 st.text(smoothiefroot_response)
 
 st.write("The name on your Smoothie will be : ", name_on_smoothie)
