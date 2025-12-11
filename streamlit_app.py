@@ -4,6 +4,8 @@ import pandas as pd
 # Only import what you actually use:
 from snowflake.snowpark.functions import col
 # Write directly to the app
+import requests
+
 st.write(
   """
   Choose the fruits you want in your Smoothie.
@@ -11,6 +13,10 @@ st.write(
 )
 
 name_on_smoothie = st.text_input("Name on the Smoothie ")
+
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
+
 st.write("The name on your Smoothie will be : ", name_on_smoothie)
 
 # session = get_active_session()
