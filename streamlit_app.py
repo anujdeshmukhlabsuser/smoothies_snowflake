@@ -1,9 +1,8 @@
+# Import python packages
 import streamlit as st
 import pandas as pd
-# These are the key Snowpark imports you need:
-from snowflake.snowpark.session import Session
+# Only import what you actually use:
 from snowflake.snowpark.functions import col
-
 # Write directly to the app
 st.write(
   """
