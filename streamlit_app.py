@@ -26,7 +26,7 @@ st.write("The name on your Smoothie will be : ", name_on_smoothie)
 # session = get_active_session()
 cnx = st.connection("snowflake")
 session = cnx.session()
-# my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
 # --- FIX 1: Convert Snowpark Dataframe to Pandas so Streamlit can use it ---
 pd_df = my_dataframe.to_pandas()
