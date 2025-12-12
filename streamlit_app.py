@@ -26,10 +26,12 @@ st.write("The name on your Smoothie will be : ", name_on_smoothie)
 # session = get_active_session()
 cnx = st.connection("snowflake")
 session = cnx.session()
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
 
 # --- FIX 1: Convert Snowpark Dataframe to Pandas so Streamlit can use it ---
 pd_df = my_dataframe.to_pandas()
+st.dataframe(pd_df)
+st.stop()
 
 ingredient_list = st.multiselect(
     'Choose up to 5 ingredients',
@@ -41,8 +43,12 @@ ingredient_string = ''
 if ingredient_list:
     for fruit_choosen in ingredient_list:
         ingredient_string += fruit_choosen + ' '
+        
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+      
         st.subheader(fruit_choosen + 'Nutrition Information')
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_choosen)
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + search_on)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
       
     my_insert_stmt = """ insert into smoothies.public.orders(name_on_order,ingredients)
